@@ -1,6 +1,6 @@
 ---
 - name: Download and Install SQL Server on Windows
-  hosts: all
+  hosts: 172.16.4.112
   tasks:
     - name: Create a temporary directory for the installer
       ansible.windows.win_file:

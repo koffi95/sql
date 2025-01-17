@@ -1,0 +1,24 @@
+---
+- name: Download and Install SQL Server on Windows
+  hosts: windows
+  tasks:
+    - name: Create a temporary directory for the installer
+      ansible.windows.win_file:
+        path: C:\Temp
+        state: directory
+
+    - name: Download SQL Server installer
+      ansible.windows.win_get_url:
+        url: https://go.microsoft.com/fwlink/?linkid=866658  # Replace with the correct download link for your SQL Server version
+        dest: C:\Temp\SQL_Server_Installer.exe
+
+    - name: Install SQL Server silently
+      ansible.windows.win_shell: >
+        C:\Temp\SQL_Server_Installer.exe /ConfigurationFile=C:\Temp\ConfigurationFile.ini /quiet /IAcceptSQLServerLicenseTerms
+      args:
+        executable: cmd
+
+    - name: Ensure SQL Server service is running
+      ansible.windows.win_service:
+        name: MSSQLSERVER
+        state: started

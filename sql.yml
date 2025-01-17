@@ -6,6 +6,11 @@
       ansible.windows.win_file:
         path: C:\Temp
         state: directory
+    - name: Install .NET Framework if required
+      ansible.windows.win_feature:
+        name: NET-Framework-Core
+        state: present
+
 
     - name: Download SQL Server installer
       ansible.windows.win_get_url:
